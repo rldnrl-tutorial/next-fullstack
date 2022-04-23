@@ -19,7 +19,7 @@ model Feedback {
   email   String
   message String
 
-  feedback FeedbackType @default(FEEDBACK)
+  feedbackType FeedbackType @default(FEEDBACK)
 }
 
 enum FeedbackType {
