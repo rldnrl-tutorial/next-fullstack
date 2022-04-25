@@ -4,5 +4,5 @@ import {
 } from '@chakra-ui/react'
 
 export default function FormControl(props: FormControlProps) {
-  return <ChakraFormControl width="23.75rem" {...props} />
+  return <ChakraFormControl maxWidth="23.75rem" {...props} />
 }
