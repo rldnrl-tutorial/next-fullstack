@@ -1,4 +1,13 @@
-import { Title, Container, VStack, Input, Select, Textarea, Button } from '@/ui'
+import {
+  Title,
+  Container,
+  VStack,
+  Input,
+  Select,
+  Textarea,
+  Button,
+  FormControl,
+} from '@/ui'
 import { FeedbackClient } from './apis/feedback.service'
 import useInput from './hooks/useInput'
 import useSelect from './hooks/useSelect'
@@ -38,12 +47,14 @@ export default function HomePage() {
           value={fullName}
           onChange={onFullNameChange}
         />
-        <Input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={onEmailChange}
-        />
+        <FormControl isRequired>
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={onEmailChange}
+          />
+        </FormControl>
         <Select value={feedbackType} onChange={onFeedbackTypeChange}>
           <option value="feedback">Feedback</option>
           <option value="issue">Issue</option>
