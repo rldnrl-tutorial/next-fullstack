@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '@/config/prisma'
 
-export async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { name, email, feedbackType, message } = req.body
 
   try {
