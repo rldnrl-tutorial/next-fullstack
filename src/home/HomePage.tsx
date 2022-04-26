@@ -10,12 +10,15 @@ import {
   FormErrorMessage,
   FormHelperText,
 } from '@/ui'
+import { useRouter } from 'next/router'
 import { FeedbackClient } from './apis/feedback.service'
 import useInput from './hooks/useInput'
 import useSelect from './hooks/useSelect'
 import type { Feedback, FeedbackType } from './types/feedback'
 
 export default function HomePage() {
+  const router = useRouter()
+
   const {
     value: fullName,
     onChange: onFullNameChange,
@@ -76,14 +79,15 @@ export default function HomePage() {
           onChange={onMessageChange}
         />
         <Button
-          onClick={() =>
+          onClick={() => {
             onSubmit({
               name: fullName,
               email,
               message,
               feedbackType,
             })
-          }
+            router.push('/feedback')
+          }}
         >
           Submit
         </Button>
