@@ -13,7 +13,7 @@ import {
 import { FeedbackClient } from './apis/feedback.service'
 import useInput from './hooks/useInput'
 import useSelect from './hooks/useSelect'
-import { Feedback } from './types/feedback'
+import type { Feedback, FeedbackType } from './types/feedback'
 
 export default function HomePage() {
   const {
@@ -31,7 +31,8 @@ export default function HomePage() {
     onChange: onMessageChange,
     reset: resetMessage,
   } = useInput<HTMLTextAreaElement>()
-  const [feedbackType, onFeedbackTypeChange] = useSelect('feedback')
+  const [feedbackType, onFeedbackTypeChange] =
+    useSelect<FeedbackType>('FEEDBACK')
 
   const isEmailError = email === ''
 
@@ -65,9 +66,9 @@ export default function HomePage() {
           )}
         </FormControl>
         <Select value={feedbackType} onChange={onFeedbackTypeChange}>
-          <option value="feedback">Feedback</option>
-          <option value="issue">Issue</option>
-          <option value="idea">Idea</option>
+          <option value="FEEDBACK">Feedback</option>
+          <option value="ISSUE">Issue</option>
+          <option value="IDEA">Idea</option>
         </Select>
         <Textarea
           placeholder="Message"
@@ -80,6 +81,7 @@ export default function HomePage() {
               name: fullName,
               email,
               message,
+              feedbackType,
             })
           }
         >
