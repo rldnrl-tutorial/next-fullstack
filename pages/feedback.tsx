@@ -1,8 +1,8 @@
-import FeedbackPage from '@/feedback/FeedbackPage'
+import FeedbackPage from '@/feedbacks/FeedbackPage'
 import { prisma } from '@/config/prisma'
 import { GetStaticProps } from 'next'
-import { Feedback as IFeedback } from '@/feedback/types/feedback'
-import { FeedbackClient } from '@/feedback/apis/feedback.service'
+import { Feedback as IFeedback } from '@/feedbacks/types/feedback'
+import { FeedbackClient } from '@/feedbacks/apis/feedback.service'
 
 export default function Feedback({
   feedbacks,
