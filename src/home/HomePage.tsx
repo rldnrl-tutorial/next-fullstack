@@ -7,6 +7,8 @@ import {
   Textarea,
   Button,
   FormControl,
+  FormErrorMessage,
+  FormHelperText,
 } from '@/ui'
 import { FeedbackClient } from './apis/feedback.service'
 import useInput from './hooks/useInput'
@@ -31,6 +33,8 @@ export default function HomePage() {
   } = useInput<HTMLTextAreaElement>()
   const [feedbackType, onFeedbackTypeChange] = useSelect('feedback')
 
+  const isEmailError = email === ''
+
   const onSubmit = async (data: Feedback) => {
     await FeedbackClient.create(data)
     resetFullName()
@@ -47,13 +51,18 @@ export default function HomePage() {
           value={fullName}
           onChange={onFullNameChange}
         />
-        <FormControl isRequired>
+        <FormControl isInvalid={isEmailError}>
           <Input
             type="email"
             placeholder="Email"
             value={email}
             onChange={onEmailChange}
           />
+          {isEmailError ? (
+            <FormErrorMessage>Email is required</FormErrorMessage>
+          ) : (
+            <FormHelperText color="green.500">Good</FormHelperText>
+          )}
         </FormControl>
         <Select value={feedbackType} onChange={onFeedbackTypeChange}>
           <option value="feedback">Feedback</option>
