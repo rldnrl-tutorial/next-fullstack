@@ -7,6 +7,7 @@ export default async function handle(
 ) {
   const feedbacks = await prisma.feedback.findMany({
     select: {
+      id: true,
       email: true,
       message: true,
       name: true,
