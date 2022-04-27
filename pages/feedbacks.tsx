@@ -1,5 +1,4 @@
 import FeedbackPage from '@/feedbacks/FeedbackPage'
-import { prisma } from '@/config/prisma'
 import { GetStaticProps } from 'next'
 import { Feedback as IFeedback } from '@/feedbacks/types/feedback'
 import { FeedbackClient } from '@/feedbacks/apis/feedback.service'
