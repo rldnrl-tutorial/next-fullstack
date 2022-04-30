@@ -5,7 +5,9 @@ import FeedbackPage from '@/feedbacks/FeedbackPage'
 import { FeedbackClient } from '@/feedbacks/apis/feedback.service'
 
 export default function Feedbacks() {
-  const { data } = useQuery('posts', FeedbackClient.fetchFeedbacks)
+  const { data, isLoading } = useQuery('posts', FeedbackClient.fetchFeedbacks)
+
+  if (isLoading) return <p>Loading...</p>
 
   return <FeedbackPage feedbacks={data as Feedback[]} />
 }
