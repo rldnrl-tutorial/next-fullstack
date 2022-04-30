@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Fullstack Web App
 
-## Getting Started
+## Motivation
 
-First, run the development server:
+Frontend 개발자인데, 서비스를 만들려면 백엔드가 필요합니다. Next.js가 Server Side Rendering을 해준다는 것은 Server로서의 역할을 충분히 할 수 있지 않을까해서 시작하게 되었습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
+## Tech Stack
+
+### Language and Library
+
+- TypeScript
+- Next.js
+- Prisma
+- React Query
+- Chakra UI
+
+### Infra
+
+- DB: Heroku PostgresQL
+
+## Route Driven Development
+
+Next.js는 자동으로 Routing을 해줍니다. 그래서 이번 프로젝트를 하면서 폴더 구조를 다음과 같이 해봤습니다.
+
+### 나의 관심사는 Pages
+
+```
+src
+├─ feedbacks
+│   ├─ FeedbackPage.tsx
+│   ├─ apis
+│   ├─ components
+│   └─ types
+├─ home
+│   ├─ HomePage.tsx
+│   ├─ apis
+│   ├─ hooks
+│   └─ types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+프로젝트가 커지면 커질수록 고민이 되는 부분은 다음과 같습니다.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. 관심사 분리를 어떻게 할 것인가
+2. 어떻게 결합도를 낮출 것인가
+3. 어떻게 폴더를 찾는데 걸리는 시간을 줄일까.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+그래서 저는 `pages`를 기준으로 폴더 이름을 지었고, 페이지에서만 사용하는 것들을 모아두었습니다. 이렇게 작업을 했더니 확실히 관심사가 분리되었습니다. 이렇게 작업하는 것이 익숙하지는 않지만, 개인 프로젝트할 때는 이렇게 작업해야겠습니다.
