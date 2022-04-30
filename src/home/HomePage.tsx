@@ -12,7 +12,7 @@ import {
 } from '@/ui'
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
-import { FeedbackClient } from './apis/feedback.service'
+import { FeedbackClient } from './apis/feedback.client'
 import useEffectOnce from './hooks/useEffectOnce'
 import useInput from './hooks/useInput'
 import useSelect from './hooks/useSelect'

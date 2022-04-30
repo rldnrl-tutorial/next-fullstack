@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next'
 import { dehydrate, QueryClient, useQuery } from 'react-query'
 import { Feedback } from '@/feedbacks/types/feedback'
 import FeedbackPage from '@/feedbacks/FeedbackPage'
-import { FeedbackClient } from '@/feedbacks/apis/feedback.service'
+import { FeedbackClient } from '@/feedbacks/apis/feedback.client'
 
 export default function Feedbacks() {
   const { data, isLoading } = useQuery('posts', FeedbackClient.fetchFeedbacks)
