@@ -1,21 +1,23 @@
-import FeedbackPage from '@/feedbacks/FeedbackPage'
 import { GetStaticProps } from 'next'
-import { Feedback as IFeedback } from '@/feedbacks/types/feedback'
+import { dehydrate, QueryClient, useQuery } from 'react-query'
+import { Feedback } from '@/feedbacks/types/feedback'
+import FeedbackPage from '@/feedbacks/FeedbackPage'
 import { FeedbackClient } from '@/feedbacks/apis/feedback.service'
 
-export default function Feedback({
-  feedbacks,
-}: {
-  readonly feedbacks: IFeedback[]
-}) {
-  return <FeedbackPage feedbacks={feedbacks} />
+export default function Feedbacks() {
+  const { data } = useQuery('posts', FeedbackClient.fetchFeedbacks)
+
+  return <FeedbackPage feedbacks={data as Feedback[]} />
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feedbacks = await FeedbackClient.fetchFeedbacks()
+  const queryClient = new QueryClient()
+
+  await queryClient.prefetchQuery('posts', FeedbackClient.fetchFeedbacks)
+
   return {
     props: {
-      feedbacks,
+      dehydratedState: dehydrate(queryClient),
     },
   }
 }
