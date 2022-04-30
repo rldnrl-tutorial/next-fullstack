@@ -11,7 +11,9 @@ import {
   FormHelperText,
 } from '@/ui'
 import { useRouter } from 'next/router'
+import { useMutation } from 'react-query'
 import { FeedbackClient } from './apis/feedback.service'
+import useEffectOnce from './hooks/useEffectOnce'
 import useInput from './hooks/useInput'
 import useSelect from './hooks/useSelect'
 import type { Feedback, FeedbackType } from './types/feedback'
@@ -37,13 +39,30 @@ export default function HomePage() {
   const [feedbackType, onFeedbackTypeChange] =
     useSelect<FeedbackType>('FEEDBACK')
 
-  const isEmailError = email === ''
+  const feedbackMutation = useMutation(
+    (data: Feedback) => FeedbackClient.create(data),
+    {
+      onSuccess: () => {
+        router.push('/feedbacks')
+      },
+    }
+  )
 
-  const onSubmit = async (data: Feedback) => {
-    await FeedbackClient.create(data)
+  useEffectOnce(() => {
     resetFullName()
     resetEmail()
     resetMessage()
+  })
+
+  const isEmailError = email === ''
+
+  const onSubmit = async () => {
+    await feedbackMutation.mutateAsync({
+      name: fullName,
+      email,
+      message,
+      feedbackType,
+    })
   }
 
   return (
@@ -78,19 +97,7 @@ export default function HomePage() {
           value={message}
           onChange={onMessageChange}
         />
-        <Button
-          onClick={() => {
-            onSubmit({
-              name: fullName,
-              email,
-              message,
-              feedbackType,
-            })
-            router.push('/feedback')
-          }}
-        >
-          Submit
-        </Button>
+        <Button onClick={onSubmit}>Submit</Button>
       </VStack>
     </Container>
   )
