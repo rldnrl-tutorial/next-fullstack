@@ -1,4 +1,4 @@
-import apiClient from '@/config/axios-default'
+import apiClient from '@/libs/config/axios-default'
 import { Feedback } from '../types/feedback'
 
 export class FeedbackClient {

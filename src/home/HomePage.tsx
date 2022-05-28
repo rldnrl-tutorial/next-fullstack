@@ -9,7 +9,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormHelperText,
-} from '@/common/ui'
+} from '@/libs/ui'
 import { useRouter } from 'next/router'
 import { useMutation } from 'react-query'
 import { FeedbackClient } from './apis/feedback.client'

@@ -1,13 +1,4 @@
-import {
-  TableContainer,
-  Table,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Tag,
-} from '@/common/ui'
+import { TableContainer, Table, Thead, Tr, Th, Tbody, Td, Tag } from '@/libs/ui'
 import type { Feedback, FeedbackType } from '../types/feedback'
 
 interface FeedbackTableProps {
