@@ -36,6 +36,7 @@ export default function HomePage() {
     onChange: onMessageChange,
     reset: resetMessage,
   } = useInput<HTMLTextAreaElement>()
+
   const [feedbackType, onFeedbackTypeChange] =
     useSelect<FeedbackType>('FEEDBACK')
 
