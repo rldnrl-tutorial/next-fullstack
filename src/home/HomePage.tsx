@@ -2,43 +2,29 @@ import {
   Title,
   Container,
   VStack,
-  Input,
-  Select,
-  Textarea,
   Button,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
+  Input,
 } from '@/libs/ui'
 import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { FeedbackClient } from './apis/feedback.client'
 import useEffectOnce from './hooks/useEffectOnce'
-import useInput from './hooks/useInput'
-import useSelect from './hooks/useSelect'
-import type { Feedback, FeedbackType } from './types/feedback'
+import type { Feedback } from './types/feedback'
 
 export default function HomePage() {
   const router = useRouter()
 
   const {
-    value: fullName,
-    onChange: onFullNameChange,
-    reset: resetFullName,
-  } = useInput()
-  const {
-    value: email,
-    onChange: onEmailChange,
-    reset: resetEmail,
-  } = useInput()
-  const {
-    value: message,
-    onChange: onMessageChange,
-    reset: resetMessage,
-  } = useInput<HTMLTextAreaElement>()
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Feedback>()
 
-  const [feedbackType, onFeedbackTypeChange] =
-    useSelect<FeedbackType>('FEEDBACK')
+  console.log(errors)
 
   const feedbackMutation = useMutation(
     (data: Feedback) => FeedbackClient.create(data),
@@ -50,55 +36,42 @@ export default function HomePage() {
   )
 
   useEffectOnce(() => {
-    resetFullName()
-    resetEmail()
-    resetMessage()
+    reset()
   })
 
-  const isEmailError = email === ''
-
-  const onSubmit = async () => {
-    await feedbackMutation.mutateAsync({
-      name: fullName,
-      email,
-      message,
-      feedbackType,
-    })
+  const onSubmit = async (data: Feedback) => {
+    await feedbackMutation.mutateAsync(data)
   }
 
   return (
     <Container padding="10">
       <VStack spacing="5">
         <Title>Submit Your Feedback</Title>
-        <Input
-          placeholder="Full name"
-          value={fullName}
-          onChange={onFullNameChange}
-        />
-        <FormControl isInvalid={isEmailError}>
+        <Input {...register('name')} placeholder="Full name" />
+        <FormControl>
           <Input
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={onEmailChange}
+            {...register('email', {
+              required: 'This is required',
+              pattern:
+                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+            })}
           />
-          {isEmailError ? (
-            <FormErrorMessage>Email is required</FormErrorMessage>
-          ) : (
-            <FormHelperText color="green.500">Good</FormHelperText>
+          {errors.email && (
+            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
           )}
         </FormControl>
-        <Select value={feedbackType} onChange={onFeedbackTypeChange}>
+        <select {...register('feedbackType', { required: 'This is required' })}>
           <option value="FEEDBACK">Feedback</option>
           <option value="ISSUE">Issue</option>
           <option value="IDEA">Idea</option>
-        </Select>
-        <Textarea
+        </select>
+        <textarea
+          {...register('message', { required: 'This is required' })}
           placeholder="Message"
-          value={message}
-          onChange={onMessageChange}
         />
-        <Button onClick={onSubmit}>Submit</Button>
+        <Button onClick={handleSubmit((data) => onSubmit(data))}>Submit</Button>
       </VStack>
     </Container>
   )
