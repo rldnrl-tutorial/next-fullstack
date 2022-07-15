@@ -1,9 +1,15 @@
-import { InputHTMLAttributes } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+const Input = forwardRef<HTMLInputElement, ComponentPropsWithoutRef<'input'>>(
+  (props, ref) => {
+    return (
+      <input
+        {...props}
+        className="px-6 py-4 max-w-sm w-full border rounded"
+        ref={ref}
+      />
+    )
+  }
+)
 
-export default function Input(props: InputProps) {
-  return (
-    <input {...props} className="px-6 py-4 max-w-sm w-full border rounded" />
-  )
-}
+export default Input
