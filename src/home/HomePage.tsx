@@ -1,15 +1,12 @@
 import {
   Title,
-  Container,
-  VStack,
-  Button,
-  FormControl,
-  FormErrorMessage,
   Input,
-  Select,
+  FormErrorMessage,
+  Button,
   Textarea,
-  Flex,
+  Select,
 } from '@/libs/ui'
+import Label from '@/libs/ui/Label'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
@@ -45,42 +42,82 @@ export default function HomePage() {
   }
 
   return (
-    <Flex minHeight="inherit" alignItems="center">
-      <Container padding="10">
-        <VStack spacing="5">
-          <Title>Submit Your Feedback</Title>
-          <Input {...register('name')} placeholder="Full name" />
-          <FormControl>
-            <Input
-              type="email"
-              placeholder="Email"
-              {...register('email', {
-                required: 'Email is required',
-                pattern:
-                  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-              })}
-            />
-            {errors.email && (
-              <FormErrorMessage>{errors.email.message}</FormErrorMessage>
-            )}
-          </FormControl>
-          <Select {...register('feedbackType')}>
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="p-10">
+        <Title className="my-8">Submit Your Feedback</Title>
+        <div className="my-5">
+          <Label
+            htmlFor="name"
+            isRequired
+            className="text-lg inline-block mb-2"
+          >
+            Full Name
+          </Label>
+          <Input
+            {...register('name', { required: true })}
+            id="name"
+            placeholder="Full Name"
+          />
+          {errors.name?.type === 'required' && (
+            <FormErrorMessage>Name is required</FormErrorMessage>
+          )}
+        </div>
+        <div className="my-5">
+          <Label
+            htmlFor="email"
+            isRequired
+            className="text-lg inline-block mb-2"
+          >
+            Email
+          </Label>
+          <Input
+            {...register('email', {
+              required: true,
+              pattern:
+                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+            })}
+            type="email"
+            id="email"
+            placeholder="Email"
+          />
+          {errors.email?.type === 'required' && (
+            <FormErrorMessage>Email is required</FormErrorMessage>
+          )}
+          {errors.email?.type === 'pattern' && (
+            <FormErrorMessage>This is not Email Format</FormErrorMessage>
+          )}
+        </div>
+        <div className="my-5">
+          <Label
+            htmlFor="type"
+            isRequired
+            className="text-lg inline-block mb-2"
+          >
+            Type
+          </Label>
+          <Select {...register('feedbackType', { required: true })} id="type">
             <option value="FEEDBACK">Feedback</option>
             <option value="ISSUE">Issue</option>
             <option value="IDEA">Idea</option>
           </Select>
-          <Textarea
-            {...register('message', { required: 'Message is required' })}
-            placeholder="Message"
-          />
-          {errors.message && (
-            <FormErrorMessage>{errors.message.message}</FormErrorMessage>
+        </div>
+        <div className="my-5">
+          <Label
+            htmlFor="message"
+            isRequired
+            className="text-lg inline-block mb-2"
+          >
+            Message
+          </Label>
+          <Textarea {...register('message', { required: true })} id="message" />
+          {errors.message?.type === 'required' && (
+            <FormErrorMessage>Email is required</FormErrorMessage>
           )}
-          <Button onClick={handleSubmit((data) => onSubmit(data))}>
-            Submit
-          </Button>
-        </VStack>
-      </Container>
-    </Flex>
+        </div>
+        <Button onClick={handleSubmit(onSubmit)} className="my-5">
+          Submit
+        </Button>
+      </div>
+    </div>
   )
 }
