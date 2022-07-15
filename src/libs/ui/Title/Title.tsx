@@ -1,7 +1,13 @@
-import { Heading, HeadingProps } from '@chakra-ui/react'
+import React, { HTMLAttributes } from 'react'
+import clsx from 'clsx'
 
-interface TitleProps extends HeadingProps {}
+type TitleProps = HTMLAttributes<HTMLHeadingElement>
 
 export default function Title(props: TitleProps) {
-  return <Heading {...props} />
+  return (
+    <h2
+      {...props}
+      className={clsx('text-4xl leading-3 font-medium', props.className)}
+    />
+  )
 }
