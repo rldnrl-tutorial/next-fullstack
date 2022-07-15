@@ -1,5 +1,13 @@
-import { Textarea as ChakraTextArea, TextareaProps } from '@chakra-ui/react'
+import {
+  forwardRef,
+  Textarea as ChakraTextArea,
+  TextareaProps,
+} from '@chakra-ui/react'
 
-export default function Textarea(props: TextareaProps) {
-  return <ChakraTextArea maxWidth="23.75rem" height="15rem" {...props} />
-}
+const Textarea = forwardRef<TextareaProps, 'textarea'>((props, ref) => {
+  return (
+    <ChakraTextArea maxWidth="23.75rem" height="15rem" {...props} ref={ref} />
+  )
+})
+
+export default Textarea
