@@ -10,6 +10,7 @@ export {
   VStack,
   Container,
   TableContainer,
+  Flex,
   Table,
   TableCaption,
   Thead,
