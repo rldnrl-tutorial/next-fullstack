@@ -14,7 +14,7 @@ export default function Table(props: TableProps) {
     <table
       {...props}
       className={clsx(
-        'w-full text-left text-md text-gray-500 dark:text-gray-400',
+        'text-left text-md text-gray-500 dark:text-gray-400',
         props.className
       )}
     >
