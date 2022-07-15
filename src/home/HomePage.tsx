@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Textarea,
+  Flex,
 } from '@/libs/ui'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -44,35 +45,42 @@ export default function HomePage() {
   }
 
   return (
-    <Container padding="10">
-      <VStack spacing="5">
-        <Title>Submit Your Feedback</Title>
-        <Input {...register('name')} placeholder="Full name" />
-        <FormControl>
-          <Input
-            type="email"
-            placeholder="Email"
-            {...register('email', {
-              required: 'This is required',
-              pattern:
-                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-            })}
+    <Flex minHeight="inherit" alignItems="center">
+      <Container padding="10">
+        <VStack spacing="5">
+          <Title>Submit Your Feedback</Title>
+          <Input {...register('name')} placeholder="Full name" />
+          <FormControl>
+            <Input
+              type="email"
+              placeholder="Email"
+              {...register('email', {
+                required: 'Email is required',
+                pattern:
+                  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+              })}
+            />
+            {errors.email && (
+              <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+            )}
+          </FormControl>
+          <Select {...register('feedbackType')}>
+            <option value="FEEDBACK">Feedback</option>
+            <option value="ISSUE">Issue</option>
+            <option value="IDEA">Idea</option>
+          </Select>
+          <Textarea
+            {...register('message', { required: 'Message is required' })}
+            placeholder="Message"
           />
-          {errors.email && (
-            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+          {errors.message && (
+            <FormErrorMessage>{errors.message.message}</FormErrorMessage>
           )}
-        </FormControl>
-        <Select {...register('feedbackType', { required: 'This is required' })}>
-          <option value="FEEDBACK">Feedback</option>
-          <option value="ISSUE">Issue</option>
-          <option value="IDEA">Idea</option>
-        </Select>
-        <Textarea
-          {...register('message', { required: 'This is required' })}
-          placeholder="Message"
-        />
-        <Button onClick={handleSubmit((data) => onSubmit(data))}>Submit</Button>
-      </VStack>
-    </Container>
+          <Button onClick={handleSubmit((data) => onSubmit(data))}>
+            Submit
+          </Button>
+        </VStack>
+      </Container>
+    </Flex>
   )
 }
