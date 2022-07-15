@@ -1,23 +1,6 @@
 export { default as Title } from './Title'
 export { default as Input } from './Input'
-export { default as Textarea } from './Textarea'
+export { default as FormErrorMessage } from './FormErrorMessage'
 export { default as Button } from './Button'
+export { default as Textarea } from './Textarea'
 export { default as Select } from './Select'
-export { default as FormControl } from './FormControl'
-export { default as FormHelperText } from './FormHelperText'
-export { default as Tag } from './Tag'
-export {
-  VStack,
-  Container,
-  TableContainer,
-  Flex,
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Tfoot,
-  FormErrorMessage,
-} from '@chakra-ui/react'
