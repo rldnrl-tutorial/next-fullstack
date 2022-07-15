@@ -6,6 +6,8 @@ import {
   FormControl,
   FormErrorMessage,
   Input,
+  Select,
+  Textarea,
 } from '@/libs/ui'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -23,8 +25,6 @@ export default function HomePage() {
     reset,
     formState: { errors },
   } = useForm<Feedback>()
-
-  console.log(errors)
 
   const feedbackMutation = useMutation(
     (data: Feedback) => FeedbackClient.create(data),
@@ -62,12 +62,12 @@ export default function HomePage() {
             <FormErrorMessage>{errors.email.message}</FormErrorMessage>
           )}
         </FormControl>
-        <select {...register('feedbackType', { required: 'This is required' })}>
+        <Select {...register('feedbackType', { required: 'This is required' })}>
           <option value="FEEDBACK">Feedback</option>
           <option value="ISSUE">Issue</option>
           <option value="IDEA">Idea</option>
-        </select>
-        <textarea
+        </Select>
+        <Textarea
           {...register('message', { required: 'This is required' })}
           placeholder="Message"
         />
