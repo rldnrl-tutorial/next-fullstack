@@ -18,8 +18,8 @@ export default function FeedbackTable({ feedbacks }: FeedbackTableProps) {
   }
 
   return (
-    <div className="px-16 py-5 relative overflow-x auto shadow-md sm:rounded-lg">
-      <Table>
+    <div className="w-full relative overflow-x auto shadow-md rounded sm:rounded-lg">
+      <Table className="m-auto rounded">
         <Table.Head>
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
